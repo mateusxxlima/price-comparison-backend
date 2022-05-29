@@ -4,7 +4,7 @@ import { Injectable } from '@nestjs/common';
 export class AppService {
   getHello() {
     return {
-      message: 'Hello world!'
+      message: 'Comparador de preços dos principais supermercados da cidade de Chapecó'
     };
   }
 }
