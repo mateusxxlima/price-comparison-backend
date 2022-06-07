@@ -1,10 +1,18 @@
 import { Injectable } from '@nestjs/common';
 
+import { Alfa } from './establishments/alfa';
+
 @Injectable()
 export class AppService {
-  getHello() {
-    return {
-      message: 'Comparador de preços dos principais supermercados da cidade de Chapecó'
-    };
+
+  alfa: Alfa;
+
+  constructor () {
+    this.alfa = new Alfa();
+  }
+
+  product_search(product: string) {
+    const data = this.alfa.product_search(product);
+    return data
   }
 }
