@@ -1,7 +1,6 @@
 import axios from 'axios';
 
 export class Alfa {
-
   url: string;
   endpoint_search: string;
 
@@ -17,7 +16,7 @@ export class Alfa {
       const body = this.getBody(product);
       const { data } = await axios.post(uri, body);
       return data;
-    } catch(err) {
+    } catch (err) {
       console.log(err);
     }
   }
@@ -37,9 +36,9 @@ export class Alfa {
       personas: [],
       sort: {
         field: '_score',
-        order: 'desc'
+        order: 'desc',
       },
-      pricingRange: {}
-    }
+      pricingRange: {},
+    };
   }
 }
