@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { IProduct } from 'src/interfaces';
 
 export class Alfa {
   url: string;
@@ -15,7 +16,7 @@ export class Alfa {
     try {
       const body = this.getBody(product);
       const { data } = await axios.post(uri, body);
-      return data;
+      return this.standardizes(data);
     } catch (err) {
       console.log(err);
     }
@@ -40,5 +41,20 @@ export class Alfa {
       },
       pricingRange: {},
     };
+  }
+
+  standardizes(data):IProduct[] {
+    const { edges } = data;
+    console.log(edges)
+    return edges.map(({ node }) => {
+      const product: IProduct = {
+        price: node.pricing[0].price,
+        ean: node.gtin,
+        product: node.name,
+        supermarket: 'Alfa',
+        imageLink: node.image
+      }
+      return product;
+    })
   }
 }

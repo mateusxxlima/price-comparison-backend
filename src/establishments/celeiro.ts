@@ -1,4 +1,5 @@
 import axios, { AxiosRequestHeaders } from 'axios';
+import { IProduct } from 'src/interfaces';
 
 export class Celeiro {
   url: string;
@@ -20,9 +21,23 @@ export class Celeiro {
 
     try {
       const { data } = await axios.get(uri, { headers: this.headers });
-      return data;
+      return this.standardizes(data);
     } catch (err) {
       console.log(err);
     }
+  }
+
+  standardizes(data):IProduct[] {
+    const { data: { produtos } } = data;
+    return produtos.map(item => {
+      const product: IProduct = {
+        price: parseFloat(item.preco),
+        ean: item.codigo_barras,
+        product: item.descricao,
+        supermarket: 'Celeiro',
+        imageLink: item.imagem
+      }
+      return product;
+    })
   }
 }

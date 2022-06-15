@@ -16,6 +16,7 @@ export class AppService {
   async product_search(product: string) {
     const alfaData = await this.alfa.product_search(product);
     const celeiroData = await this.celeiro.product_search(product);
-    return { alfaData, celeiroData };
+
+    return [...alfaData, ...celeiroData];
   }
 }
