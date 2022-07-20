@@ -18,7 +18,7 @@ export class Alfa {
       const { data } = await axios.post(uri, body);
       return this.standardizes(data);
     } catch (err) {
-      console.log(err);
+      console.error(err);
     }
   }
 
@@ -45,7 +45,6 @@ export class Alfa {
 
   standardizes(data):IProduct[] {
     const { edges } = data;
-    console.log(edges)
     return edges.map(({ node }) => {
       const product: IProduct = {
         price: node.pricing[0].price,

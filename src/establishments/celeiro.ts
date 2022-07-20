@@ -17,17 +17,26 @@ export class Celeiro {
   }
 
   async product_search(product: string) {
-    const uri = this.url + this.endpoint_search + product;
+    const parsed = product.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+    const uri = this.url + this.endpoint_search + parsed;
 
     try {
-      const { data } = await axios.get(uri, { headers: this.headers });
-      return this.standardizes(data);
+      const response = await axios.get(
+        uri,
+        {
+          headers: this.headers,
+          validateStatus: (_status) => true
+        },
+      );
+      return this.standardizes(response);
     } catch (err) {
       console.log(err);
     }
   }
 
-  standardizes(data):IProduct[] {
+  standardizes({ data, status }):IProduct[] {
+    if (status != 200) return [];
+
     const { data: { produtos } } = data;
     return produtos.map(item => {
       const product: IProduct = {
