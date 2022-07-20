@@ -17,7 +17,8 @@ export class Celeiro {
   }
 
   async product_search(product: string) {
-    const uri = this.url + this.endpoint_search + product;
+    const parsed = product.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+    const uri = this.url + this.endpoint_search + parsed;
 
     try {
       const response = await axios.get(
