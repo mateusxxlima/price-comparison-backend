@@ -6,9 +6,11 @@ export class Celeiro {
   endpoint_search: string;
   token: string;
   headers: AxiosRequestHeaders;
+  baseUrlImage: string;
 
   constructor() {
     this.url = 'https://api.celeiro.com.br';
+    this.baseUrlImage = 'https://s3.amazonaws.com/produtos.vipcommerce.com.br/144x144';
     this.endpoint_search =
       '/v1/loja/buscas/produtos/filial/1/centro_distribuicao/1/termo/';
     this.token =
@@ -44,7 +46,7 @@ export class Celeiro {
         ean: item.codigo_barras,
         product: item.descricao,
         supermarket: 'Celeiro',
-        imageLink: item.imagem
+        imageLink: this.baseUrlImage + '/' + item.imagem
       }
       return product;
     })
