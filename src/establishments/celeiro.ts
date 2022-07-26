@@ -46,9 +46,15 @@ export class Celeiro {
         ean: item.codigo_barras,
         product: item.descricao,
         supermarket: 'Celeiro',
-        imageLink: this.baseUrlImage + '/' + item.imagem
+        imageLink: this.getImageLink(item)
       }
       return product;
     })
+  }
+
+  getImageLink({ imagem }) {
+    if (imagem)
+      return this.baseUrlImage + '/' + imagem;
+    return null;
   }
 }
